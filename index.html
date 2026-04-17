@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAGGY - P1</title>
+    <style>
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            background: #ffb347; 
+            background: linear-gradient(-45deg, #ffcc33, #ffb347, #ff5e62, #ff99cc);
+            background-size: 400% 400%;
+            animation: sunsetGradient 12s ease infinite;
+            color: white;
+            font-family: 'Garamond', serif;
+            overflow-x: hidden;
+        }
+       #mouse-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    
+    background: radial-gradient(
+        circle, 
+        rgba(138, 43, 226, 0.8) 0%,   
+        rgba(138, 43, 226, 0.4) 25%,  
+        rgba(138, 43, 226, 0.1) 50%, 
+        rgba(138, 43, 226, 0) 80%     
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+   
+    filter: blur(10px); 
+}
+
+
+        body.scroll-locked {
+            overflow: hidden !important;
+            height: 100vh !important;
+        }
+
+        @keyframes sunsetGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+       
+        #oscar-cursor {
+            position: fixed;
+            width: 70px;
+            height: 70px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate3d(-100px, -100px, 0); 
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+       
+        @media (hover: hover) {
+            body { cursor: none; }
+            #oscar-cursor { opacity: 1; }
+        }
+
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 15px; 
+            box-sizing: border-box;
+        }
+
+        .intro-title {
+            
+            font-size: clamp(1.5rem, 7vw, 4rem); 
+            text-transform: uppercase;
+            letter-spacing: 10px; 
+            opacity: 0;
+            text-shadow: 0 0 30px rgba(0,0,0,0.2);
+            animation: championReveal 2.5s ease-out forwards 1s;
+            word-wrap: break-word; 
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        @media (max-width: 480px) {
+            .intro-title {
+                letter-spacing: 4px; 
+                line-height: 1.2;
+            }
+            .content {
+                padding: 40px 20px; 
+                margin: 20px 15px 80px 15px;
+            }
+        }
+        @keyframes championReveal {
+            0% { opacity: 0; transform: scale(0.9); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            opacity: 0;
+            transition: opacity 1s ease;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        
+        .content {
+            padding: 60px 30px;
+            max-width: 600px;
+            margin: 40px auto 100px auto;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            line-height: 1.8;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 10px; color: #fff; }
+    </style>
+</head>
+
+<body class="scroll-locked">
+
+    <img id="oscar-cursor" src="https://www.formula1.com/content/dam/fom-website/drivers/O/OSCPIA01_Oscar_Piastri/oscpia01.png.transform/2col-retina/image.png" alt="Oscar">
+<div id="mouse-glow"></div>
+    <section class="hero">
+        <div class="hero-overlay">
+            <h1 class="intro-title">CONGRATULATIONS<br>PRAGJYOTI</h1>
+            <p id="scrollHint" class="scroll-hint">▼ SCROLL DOWN ▼</p>
+        </div>
+    </section>
+
+    <main class="content">
+        <h2>P1. WORLD CHAMPION</h2>
+        <p>10th Grade: Conquered.<br>Board Exams: Crushed.</p>
+        <div style="margin: 30px 0; font-style: italic;">
+            [Replace this with your long, heartfelt letter to her!]
+        </div>
+        <p>Keep pushing the limits, Praggy. The checkered flag is yours.</p>
+        <span style="font-size: 3rem;">🧡🏆💙</span>
+    </main>
+
+    <script>
+        const oscar = document.getElementById('oscar-cursor');
+const glow = document.getElementById('mouse-glow');
+const hint = document.getElementById('scrollHint');
+
+
+function moveElements(x, y) {
+    
+    oscar.style.opacity = "1";
+    if(glow) glow.style.opacity = "1";
+
+    
+    oscar.style.transform = `translate3d(${x - 40}px, ${y - 40}px, 0)`;
+    
+   
+    if(glow) 
+glow.style.transform = `translate3d(${x - 200}px, ${y - 200}px, 0)`;
+}
+
+
+document.addEventListener('mousemove', (e) => {
+    moveElements(e.clientX, e.clientY);
+});
+
+
+document.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    moveElements(touch.clientX, touch.clientY);
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    moveElements(touch.clientX, touch.clientY);
+}, { passive: true });
+
+
+
+window.scrollTo(0, 0);
+function preventDefault(e) { e.preventDefault(); }
+
+window.addEventListener('wheel', preventDefault, { passive: false });
+window.addEventListener('touchmove', preventDefault, { passive: false });
+
+setTimeout(() => {
+    document.body.classList.remove('scroll-locked');
+    window.removeEventListener('wheel', preventDefault);
+    window.removeEventListener('touchmove', preventDefault);
+    hint.style.opacity = '0.8';
+    
+    
+    if (window.matchMedia("(hover: hover)").matches) {
+        document.body.style.cursor = 'auto';
+    }
+}, 5000);
+    </script>
+</body>
+</html>
